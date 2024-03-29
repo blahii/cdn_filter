@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPage -= 1;
             const developerName = document.getElementById('developerInput') ? document.getElementById('developerInput').value : '';
             const searchQuery = document.getElementById('searchInput') ? document.getElementById('searchInput').value : '';
-            fetchAndDisplayProjects(currentPage, perPage, searchQuery, selectedRegions, developerName, selectedPriorities, selectedAreas, selectedFurnishings);
+            fetchAndDisplayProjects(currentPage, perPage, searchQuery, selectedRegions, developerName, selectedAreas, selectedFurnishings);
         }
     });
     
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentPage += 1;
         const developerName = document.getElementById('developerInput') ? document.getElementById('developerInput').value : '';
         const searchQuery = document.getElementById('searchInput') ? document.getElementById('searchInput').value : '';
-        fetchAndDisplayProjects(currentPage, perPage, searchQuery, selectedRegions, developerName, selectedPriorities, selectedAreas, selectedFurnishings);
+        fetchAndDisplayProjects(currentPage, perPage, searchQuery, selectedRegions, developerName, selectedAreas, selectedFurnishings);
     });
     searchInput.addEventListener('input', () => {
         const searchQuery = searchInput.value.trim();
