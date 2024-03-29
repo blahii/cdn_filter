@@ -1,4 +1,4 @@
-function fetchAndDisplayProjects(page = 1, perPage = 24, searchQuery = '', selectedRegions = [], selectedPriorities = [], selectedAreas = [], selectedFurnishings = []) {
+function fetchAndDisplayProjects(page = 1, perPage = 24, searchQuery = '', selectedStatus = [], selectedRegions = [], selectedPriorities = [], selectedAreas = [], selectedFurnishings = []) {
     let apiURL = `https://squid-app-bjn57.ondigitalocean.app/projects?page=${page}&perPage=${perPage}`;
     if (searchQuery) {
         apiURL += `&search=${encodeURIComponent(searchQuery)}`;
@@ -15,10 +15,13 @@ function fetchAndDisplayProjects(page = 1, perPage = 24, searchQuery = '', selec
     if (selectedPriorities.length > 0) {
         apiURL += `&priority=${encodeURIComponent(selectedPriorities.join(','))}`;
     }
+    if (selectedStatus = [].length > 0) {
+        apiURL += `&status=${encodeURIComponent(selectedStatus.join(','))}`;
+    }
     history.pushState(
         { page: page },
         `Page ${page}`,
-        `?page=${page}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ''}${selectedRegions.length > 0 ? `&regions=${encodeURIComponent(selectedRegions.join(','))}` : ''}${selectedPriorities.length > 0 ? `&priority=${encodeURIComponent(selectedPriorities.join(','))}` : ''}${selectedAreas.length > 0 ? `&area=${encodeURIComponent(selectedAreas.join(','))}` : ''}${selectedFurnishings.length > 0 ? `&furnishing=${encodeURIComponent(selectedFurnishings.join(','))}` : ''}`
+        `?page=${page}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ''}${selectedRegions.length > 0 ? `&regions=${encodeURIComponent(selectedRegions.join(','))}` : ''}${selectedPriorities.length > 0 ? `&priority=${encodeURIComponent(selectedPriorities.join(','))}` : ''}${selectedAreas.length > 0 ? `&area=${encodeURIComponent(selectedAreas.join(','))}` : ''}${selectedFurnishings.length > 0 ? `&furnishing=${encodeURIComponent(selectedFurnishings.join(','))}` : ''}${selectedStatus.length > 0 ? `&furnishing=${encodeURIComponent(selectedStatus.join(','))}` : ''}`
     );    
     fetch(apiURL)
         .then(response => response.json())
@@ -100,8 +103,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchFromURL = params.get('search') || '';
     const selectedRegions = Array.from(document.querySelectorAll('[name="regions"]:checked'))
     .map(cb => cb.getAttribute('valueRegion'));
-    const selectedPriority = Array.from(document.querySelectorAll('[name="priority"]:checked'))
+    const selectedPriorities = Array.from(document.querySelectorAll('[name="priority"]:checked'))
     .map(cb => cb.getAttribute('valuePriority'));
+    const selectedStatus = Array.from(document.querySelectorAll('[name="status"]:checked'))
+    .map(cb => cb.getAttribute('valueStatus'));
     const selectedAreas = Array.from(document.querySelectorAll('[name="area"]:checked'))
     .map(cb => cb.getAttribute('valueAreas'));
      const selectedFurnishings = Array.from(document.querySelectorAll('[name="furnishing"]:checked'))
@@ -120,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPage -= 1;
             const developerName = document.getElementById('developerInput') ? document.getElementById('developerInput').value : '';
             const searchQuery = document.getElementById('searchInput') ? document.getElementById('searchInput').value : '';
-            fetchAndDisplayProjects(currentPage, perPage, searchQuery, selectedRegions, developerName, selectedAreas, selectedFurnishings);
+            fetchAndDisplayProjects(currentPage, perPage, searchQuery, selectedPriorities, selectedStatus, selectedRegions, developerName, selectedAreas, selectedFurnishings);
         }
     });
     
@@ -128,12 +133,12 @@ document.addEventListener('DOMContentLoaded', () => {
         currentPage += 1;
         const developerName = document.getElementById('developerInput') ? document.getElementById('developerInput').value : '';
         const searchQuery = document.getElementById('searchInput') ? document.getElementById('searchInput').value : '';
-        fetchAndDisplayProjects(currentPage, perPage, searchQuery, selectedRegions, developerName, selectedAreas, selectedFurnishings);
+        fetchAndDisplayProjects(currentPage, perPage, searchQuery, selectedPriorities,  selectedStatus, selectedRegions, developerName, selectedAreas, selectedFurnishings);
     });
     searchInput.addEventListener('input', () => {
         const searchQuery = searchInput.value.trim();
         currentPage = 1;
-        fetchAndDisplayProjects(currentPage, perPage, searchQuery, selectedRegions, selectedPriority, selectedAreas,   selectedFurnishings);
+        fetchAndDisplayProjects(currentPage, perPage, searchQuery, selectedPriorities, selectedStatus, selectedRegions, selectedPriorities, selectedAreas,   selectedFurnishings);
     });
     regionCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
@@ -143,17 +148,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 .map(cb => cb.getAttribute('valueRegion'));
                 console.log('Selected Regions:', selectedRegions);
             currentPage = 1;
-            fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedRegions, selectedPriority, selectedAreas,  selectedFurnishings);
+            fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedStatus, selectedRegions, selectedPriorities, selectedAreas,  selectedFurnishings);
+        });
+    });
+
+    regionCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+
+            const selectedStatus = Array.from(regionCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.getAttribute('valueRegion'));
+                console.log('Selected Regions:', selectedStatus);
+            currentPage = 1;
+            fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedStatus, selectedRegions, selectedPriorities, selectedAreas,  selectedFurnishings);
         });
     });
     priorityCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
-            const selectedPriority = Array.from(priorityCheckboxes)
+            const selectedPriorities = Array.from(priorityCheckboxes)
                 .filter(cb => cb.checked)
                 .map(cb => cb.getAttribute('valuePriority'));
-                console.log('Selected Priorities:', selectedPriority);
+                console.log('Selected Priorities:', selectedPriorities);
             currentPage = 1;
-            fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedRegions,selectedPriority, selectedAreas,  selectedFurnishings);
+            fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedRegions,selectedPriorities, selectedAreas,  selectedFurnishings);
         });
     });
 areaCheckboxes.forEach(checkbox => {
@@ -162,7 +179,7 @@ areaCheckboxes.forEach(checkbox => {
             .filter(cb => cb.checked)
             .map(cb => cb.value);
         currentPage = 1;
-        fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedRegions, selectedPriority, selectedAreas, selectedFurnishings);
+        fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedRegions, selectedPriorities, selectedAreas, selectedFurnishings);
     });
 });
 });
