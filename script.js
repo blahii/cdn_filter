@@ -21,7 +21,7 @@ function fetchAndDisplayProjects(page = 1, perPage = 24, searchQuery = '', selec
     history.pushState(
         { page: page },
         `Page ${page}`,
-        `?page=${page}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ''}${selectedRegions.length > 0 ? `&regions=${encodeURIComponent(selectedRegions.join(','))}` : ''}${selectedPriorities.length > 0 ? `&priority=${encodeURIComponent(selectedPriorities.join(','))}` : ''}${selectedAreas.length > 0 ? `&area=${encodeURIComponent(selectedAreas.join(','))}` : ''}${selectedFurnishings.length > 0 ? `&furnishing=${encodeURIComponent(selectedFurnishings.join(','))}` : ''}${selectedStatus.length > 0 ? `&furnishing=${encodeURIComponent(selectedStatus.join(','))}` : ''}`
+        `?page=${page}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ''}${selectedRegions.length > 0 ? `&regions=${encodeURIComponent(selectedRegions.join(','))}` : ''}${selectedPriorities.length > 0 ? `&priority=${encodeURIComponent(selectedPriorities.join(','))}` : ''}${selectedAreas.length > 0 ? `&area=${encodeURIComponent(selectedAreas.join(','))}` : ''}${selectedFurnishings.length > 0 ? `&furnishing=${encodeURIComponent(selectedFurnishings.join(','))}` : ''}${selectedStatus.length > 0 ? `&status=${encodeURIComponent(selectedStatus.join(','))}` : ''}`
     );    
     fetch(apiURL)
         .then(response => response.json())
