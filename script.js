@@ -157,8 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const selectedStatus = Array.from(regionCheckboxes)
                 .filter(cb => cb.checked)
-                .map(cb => cb.getAttribute('valueRegion'));
-                console.log('Selected Regions:', selectedStatus);
+                .map(cb => cb.getAttribute('valueStatus'));
+                console.log('Selected Status:', selectedStatus);
             currentPage = 1;
             fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedStatus, selectedRegions, selectedPriorities, selectedAreas,  selectedFurnishings);
         });
