@@ -15,7 +15,7 @@ function fetchAndDisplayProjects(page = 1, perPage = 24, searchQuery = '', selec
     if (selectedPriorities.length > 0) {
         apiURL += `&priority=${encodeURIComponent(selectedPriorities.join(','))}`;
     }
-    if (selectedStatus = [].length > 0) {
+    if (selectedStatus.length > 0) {
         apiURL += `&status=${encodeURIComponent(selectedStatus.join(','))}`;
     }
     history.pushState(
@@ -133,12 +133,12 @@ document.addEventListener('DOMContentLoaded', () => {
         currentPage += 1;
         const developerName = document.getElementById('developerInput') ? document.getElementById('developerInput').value : '';
         const searchQuery = document.getElementById('searchInput') ? document.getElementById('searchInput').value : '';
-        fetchAndDisplayProjects(currentPage, perPage, searchQuery, selectedPriorities,  selectedStatus, selectedRegions, developerName, selectedAreas, selectedFurnishings);
+        fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedStatus, selectedRegions, selectedPriorities, selectedAreas, selectedFurnishings);
     });
     searchInput.addEventListener('input', () => {
         const searchQuery = searchInput.value.trim();
         currentPage = 1;
-        fetchAndDisplayProjects(currentPage, perPage, searchQuery, selectedPriorities, selectedStatus, selectedRegions, selectedPriorities, selectedAreas,   selectedFurnishings);
+         fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedStatus, selectedRegions, selectedPriorities, selectedAreas, selectedFurnishings);
     });
     regionCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .map(cb => cb.getAttribute('valueRegion'));
                 console.log('Selected Regions:', selectedRegions);
             currentPage = 1;
-            fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedStatus, selectedRegions, selectedPriorities, selectedAreas,  selectedFurnishings);
+            fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedStatus, selectedRegions, selectedPriorities, selectedAreas, selectedFurnishings);
         });
     });
 
@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .map(cb => cb.getAttribute('valueStatus'));
                 console.log('Selected Status:', selectedStatus);
             currentPage = 1;
-            fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedStatus, selectedRegions, selectedPriorities, selectedAreas,  selectedFurnishings);
+            fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedStatus, selectedRegions, selectedPriorities, selectedAreas, selectedFurnishings);
         });
     });
     priorityCheckboxes.forEach(checkbox => {
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .map(cb => cb.getAttribute('valuePriority'));
                 console.log('Selected Priorities:', selectedPriorities);
             currentPage = 1;
-            fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedRegions,selectedPriorities, selectedAreas,  selectedFurnishings);
+            fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedStatus, selectedRegions, selectedPriorities, selectedAreas, selectedFurnishings);
         });
     });
 areaCheckboxes.forEach(checkbox => {
@@ -179,7 +179,7 @@ areaCheckboxes.forEach(checkbox => {
             .filter(cb => cb.checked)
             .map(cb => cb.value);
         currentPage = 1;
-        fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedRegions, selectedPriorities, selectedAreas, selectedFurnishings);
+        fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedStatus, selectedRegions, selectedPriorities, selectedAreas, selectedFurnishings);
     });
 });
 });
