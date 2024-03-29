@@ -28,15 +28,15 @@ function fetchAndDisplayProjects(page = 1, perPage = 24, searchQuery = '', selec
         .then(data => {
             console.log('Полученные данные:', data);
             const totalCountElement = document.getElementById('total-count');
-            totalCountElement.innerHTML = `${data.totalCount}`; // Отображаем общее количество
+            totalCountElement.innerHTML = `${data.totalCount}`;
 
             const container = document.getElementById('cards-properties');
-            container.innerHTML = ''; // Очищаем контейнер перед добавлением новых карточек
+            container.innerHTML = '';
             if (data.projects && Array.isArray(data.projects)) {
                 data.projects.forEach(project => {
                     let priceText;
     if (project.Price_from_AED > 0) {
-        const formattedPrice = Number(project.Price_from_AED).toLocaleString('en-US'); // Обчислення тут
+        const formattedPrice = Number(project.Price_from_AED).toLocaleString('en-US'); 
         priceText = `AED ${formattedPrice}`;
     } else if (project.Price_from_AED === 0 && project.Status === "Out of stock") {
         priceText = "Out of stock";
