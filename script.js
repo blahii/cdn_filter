@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevButton = document.getElementById('prev-page');
     const nextButton = document.getElementById('next-page');
     const searchInput = document.getElementById('searchInput');
+    const searchDevInput = document.getElementById('searchInput');
     const furnishingCheckboxes = document.querySelectorAll('[name="furnishing"]');
     const regionCheckboxes = document.querySelectorAll('[name="regions"]');
     const priorityCheckboxes = document.querySelectorAll('[name="priority"]');
