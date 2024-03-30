@@ -1,4 +1,4 @@
-function fetchAndDisplayProjects(page = 1, perPage = 24, searchQuery = '', selectedStatus = [], selectedRegions = [], selectedPriorities = [], selectedAreas = [], selectedFurnishings = []) {
+function fetchAndDisplayProjects(page = 1, perPage = 24, searchQuery = '', selectedRegions = [], selectedFurnishings = [], selectedAreas = [], selectedPriorities = [], selectedStatus = []) {
     let apiURL = `https://squid-app-bjn57.ondigitalocean.app/projects?page=${page}&perPage=${perPage}`;
     if (searchQuery) {
         apiURL += `&search=${encodeURIComponent(searchQuery)}`;
@@ -23,7 +23,7 @@ history.pushState(
     `Page ${page}`,
     `?page=${page}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ''}${selectedRegions.length > 0 ? `&regions=${encodeURIComponent(selectedRegions.join(','))}` : ''}${selectedPriorities.length > 0 ? `&priority=${encodeURIComponent(selectedPriorities.join(','))}` : ''}${selectedAreas.length > 0 ? `&area=${encodeURIComponent(selectedAreas.join(','))}` : ''}${selectedFurnishings.length > 0 ? `&furnishing=${encodeURIComponent(selectedFurnishings.join(','))}` : ''}${selectedStatus.length > 0 ? `&status=${encodeURIComponent(selectedStatus.join(','))}` : ''}`
 );    
-   
+
     fetch(apiURL)
         .then(response => response.json())
         .then(data => {
