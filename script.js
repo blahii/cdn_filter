@@ -18,6 +18,7 @@ function fetchAndDisplayProjects(page = 1, perPage = 24, searchQuery = '', selec
 if (selectedStatus.length > 0) {
     apiURL += `&status=${encodeURIComponent(selectedStatus.join(','))}`;
 }
+
     history.pushState(
         { page: page },
         `Page ${page}`,
@@ -165,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedStatus, selectedRegions, selectedPriorities, selectedAreas, selectedFurnishings);
         });
     });
-    
+
     priorityCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
             const selectedPriorities = Array.from(priorityCheckboxes)
