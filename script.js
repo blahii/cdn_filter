@@ -118,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchDevInput = document.getElementById('searchInput');
     const furnishingCheckboxes = document.querySelectorAll('[name="furnishing"]');
     const regionCheckboxes = document.querySelectorAll('[name="regions"]');
+    const statusCheckboxes = document.querySelectorAll('[name="status"]');
     const priorityCheckboxes = document.querySelectorAll('[name="priority"]');
     const areaCheckboxes = document.querySelectorAll('[name="area"]');
     prevButton.addEventListener('click', () => {
@@ -152,10 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    regionCheckboxes.forEach(checkbox => {
+    statusCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
 
-            const selectedStatus = Array.from(regionCheckboxes)
+            const selectedStatus = Array.from(statusCheckboxes)
                 .filter(cb => cb.checked)
                 .map(cb => cb.getAttribute('valueStatus'));
                 console.log('Selected Status:', selectedStatus);
