@@ -157,15 +157,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     statusCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
-
             const selectedStatus = Array.from(statusCheckboxes)
                 .filter(cb => cb.checked)
                 .map(cb => cb.getAttribute('valueStatus'));
-                console.log('Selected Status:', selectedStatus);
-            currentPage = 1;
-            fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedStatus, selectedRegions, selectedPriorities, selectedAreas,  selectedFurnishings);
+            console.log('Selected Status:', selectedStatus);
+            currentPage = 1; // Reset to the first page upon filter change
+            fetchAndDisplayProjects(currentPage, perPage, searchInput.value.trim(), selectedStatus, selectedRegions, selectedPriorities, selectedAreas, selectedFurnishings);
         });
     });
+    
     priorityCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
             const selectedPriorities = Array.from(priorityCheckboxes)
