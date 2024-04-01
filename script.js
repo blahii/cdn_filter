@@ -1,7 +1,20 @@
-function fetchAndDisplayProjects(page = 1, perPage = 24, searchQuery = '', selectedStatus = [], selectedRegions = [], selectedPriorities = [], selectedAreas = [], selectedFurnishings = []) {
+function fetchAndDisplayProjects({
+    page = 1, 
+    perPage = 24, 
+    searchQuery = '', 
+    selectedRegions = [],  
+    selectedStatus = [],
+    selectedPriorities = [], 
+    selectedAreas = [], 
+    selectedFurnishings = []
+} = {}) {
     let apiURL = `https://squid-app-bjn57.ondigitalocean.app/projects?page=${page}&perPage=${perPage}`;
+
     if (searchQuery) {
         apiURL += `&search=${encodeURIComponent(searchQuery)}`;
+    }
+    if (selectedPriorities.length > 0) {
+        apiURL += `&priority=${encodeURIComponent(selectedPriorities.join(','))}`;
     }
     if (selectedRegions.length > 0) {
         apiURL += `&regions=${encodeURIComponent(selectedRegions.join(','))}`;
@@ -12,12 +25,9 @@ function fetchAndDisplayProjects(page = 1, perPage = 24, searchQuery = '', selec
     if (selectedAreas.length > 0) {
         apiURL += `&area=${encodeURIComponent(selectedAreas.join(','))}`;
     }
-    if (selectedPriorities.length > 0) {
-        apiURL += `&priority=${encodeURIComponent(selectedPriorities.join(','))}`;
+    if (selectedStatus.length > 0) {
+        apiURL += `&status=${encodeURIComponent(selectedStatus.join(','))}`;
     }
-if (selectedStatus.length > 0) {
-    apiURL += `&status=${encodeURIComponent(selectedStatus.join(','))}`;
-}
 
     history.pushState(
         { page: page },
@@ -112,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .map(cb => cb.getAttribute('valueAreas'));
      const selectedFurnishings = Array.from(document.querySelectorAll('[name="furnishing"]:checked'))
     .map(cb => cb.getAttribute('valueFurnishings'));
-    fetchAndDisplayProjects(pageFromURL, perPage, searchFromURL, selectedRegions);
+    fetchAndDisplayProjects(currentPage, perPage, searchFromURL, selectedStatus, selectedRegions,selectedPriorities, developerName, selectedAreas, selectedFurnishings);
 
     
     const prevButton = document.getElementById('prev-page');
@@ -129,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPage -= 1;
             const developerName = document.getElementById('developerInput') ? document.getElementById('developerInput').value : '';
             const searchQuery = document.getElementById('searchInput') ? document.getElementById('searchInput').value : '';
-            fetchAndDisplayProjects(currentPage, perPage, searchQuery, selectedStatus, selectedRegions,selectedPriorities, developerName, selectedAreas, selectedFurnishings);
+            fetchAndDisplayProjects(currentPage, perPage, searchFromURL, selectedStatus, selectedRegions,selectedPriorities, developerName, selectedAreas, selectedFurnishings);
         }
     });
     
@@ -146,7 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     regionCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
-
             const selectedRegions = Array.from(regionCheckboxes)
                 .filter(cb => cb.checked)
                 .map(cb => cb.getAttribute('valueRegion'));
@@ -187,14 +196,3 @@ areaCheckboxes.forEach(checkbox => {
     });
 });
 });
-
-$(function() {
-
-    $('#chkveg').multiselect({
-      includeSelectAllOption: true
-    });
-  
-    $('#btnget').click(function() {
-      alert($('#chkveg').val());
-    });
-  });
