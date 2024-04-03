@@ -102,7 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const perPage = 24;
     const params = new URLSearchParams(window.location.search);
     const pageFromURL = parseInt(params.get('page'), 10) || 1;
-    const searchFromURL = params.get('search') || '';
+    // const searchFromURL = params.get('search') || '';
+    const searchQuery = document.getElementById('searchInput').value.trim();
     const selectedRegions = Array.from(document.querySelectorAll('[name="regions"]:checked'))
     .map(cb => cb.getAttribute('valueRegion'));
     const selectedPriorities = Array.from(document.querySelectorAll('[name="priority"]:checked'))
@@ -119,8 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevButton = document.getElementById('prev-page');
     const nextButton = document.getElementById('next-page');
     const searchInput = document.getElementById('searchInput');
-    const searchDevInput = document.getElementById('searchInput');
-    const furnishingCheckboxes = document.querySelectorAll('[name="furnishing"]');
+    // const searchDevInput = document.getElementById('searchInput');
+    // const furnishingCheckboxes = document.querySelectorAll('[name="furnishing"]');
     const regionCheckboxes = document.querySelectorAll('[name="regions"]');
     const statusCheckboxes = document.querySelectorAll('[name="status"]');
     const priorityCheckboxes = document.querySelectorAll('[name="priority"]');
